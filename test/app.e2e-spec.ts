@@ -5,6 +5,7 @@ import { PrismaService } from '../src/prisma/prisma.service';
 import * as pactum from 'pactum';
 import { AuthDto } from 'src/auth/dto';
 import { EditUserDto } from 'src/user/dto';
+import { CreateBookmarkDto } from 'src/bookmark/dto';
 
 describe('App e2e', () => {
   let app: INestApplication;
@@ -138,7 +139,23 @@ describe('App e2e', () => {
           .expectBody([]);
       });
     });
-    //   describe('Create bookmark', () => {});
+
+    describe('Create bookmark', () => {
+      it('should create bookmark', () => {
+        const dto: CreateBookmarkDto = {
+          title: 'First Bookmark',
+          link: 'https://any-url.com',
+        };
+        return pactum
+          .spec()
+          .post('/bookmarks')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .withBody(dto)
+          .expectStatus(201);
+      });
+    });
     //   describe('Get bookmarks', () => {});
     //   describe('Get bookmark by id', () => {});
     //   describe('Edit bookmark by id', () => {});
