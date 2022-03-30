@@ -205,6 +205,29 @@ describe('App e2e', () => {
           .expectBodyContains(dto.description);
       });
     });
-    //   describe('Delete bookmark by id', () => {});
+
+    describe('Delete bookmark by id', () => {
+      it('should delete bookmark by id', () => {
+        return pactum
+          .spec()
+          .delete('/bookmarks/{id}')
+          .withPathParams('id', '$S{bookmarkId}')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .expectStatus(204);
+      });
+
+      it('should get empty bookmarks', () => {
+        return pactum
+          .spec()
+          .get('/bookmarks')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .expectStatus(200)
+          .expectJsonLength(0);
+      });
+    });
   });
 });
