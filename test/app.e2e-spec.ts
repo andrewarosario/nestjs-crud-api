@@ -125,11 +125,23 @@ describe('App e2e', () => {
     });
   });
 
-  // describe('Bookmarks', () => {
-  //   describe('Create bookmark', () => {});
-  //   describe('Get bookmarks', () => {});
-  //   describe('Get bookmark by id', () => {});
-  //   describe('Edit bookmark by id', () => {});
-  //   describe('Delete bookmark by id', () => {});
-  // });
+  describe('Bookmarks', () => {
+    describe('Get empty bookmarks', () => {
+      it('should get bookmarks', () => {
+        return pactum
+          .spec()
+          .get('/bookmarks')
+          .withHeaders({
+            Authorization: 'Bearer $S{userAt}',
+          })
+          .expectStatus(200)
+          .expectBody([]);
+      });
+    });
+    //   describe('Create bookmark', () => {});
+    //   describe('Get bookmarks', () => {});
+    //   describe('Get bookmark by id', () => {});
+    //   describe('Edit bookmark by id', () => {});
+    //   describe('Delete bookmark by id', () => {});
+  });
 });
